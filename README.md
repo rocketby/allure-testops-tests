@@ -2,6 +2,11 @@
 # Tests for Allure TestOps
 <a target="_blank" href="https://qameta.io">qameta.io</a>
 
+# Jenkins job
+<a target="_blank" href="https://jenkins.autotests.cloud/job/allure-testops-tests/">jenkins.autotests.cloud/job/allure-testops-tests</a>
+
+
+
 # USAGE examples
 
 ### For run remote tests need fill remote.properties or to pass value:
