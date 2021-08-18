@@ -12,10 +12,12 @@ import static com.codeborne.selenide.Selenide.$$;
 public class ProjectsTable {
 
     private ElementsCollection tableRows = $$("li.list-row");
+    public int size;
 
     @Step("Navigate to project `{projectName}`")
     public ProjectPage navigateTo(String projectName) {
         tableRows.find(text(projectName)).$(".ProjectCard__name > a").click();
+        size = tableRows.size();
         return new ProjectPage();
     }
 }
