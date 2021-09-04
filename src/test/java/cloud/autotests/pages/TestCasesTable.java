@@ -28,7 +28,7 @@ public class TestCasesTable {
 
     @Step("Create new test case with name: [{nameOfTestCase}]")
     public void createNewTestCase(String nameOfTestCase) {
-        nameOfNewTestCaseInput.setValue(nameOfTestCase).submit();
+        nameOfNewTestCaseInput.setValue(nameOfTestCase).pressEnter();
     }
 
     @Step("Check test cases table size")
