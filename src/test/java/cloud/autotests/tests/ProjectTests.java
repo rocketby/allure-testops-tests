@@ -25,7 +25,7 @@ public class ProjectTests extends TestBase {
     @WithLogin
     @Test
     void projectPageShouldContains5Widgets() {
-        ProjectsTable projectsTable = open(App.config.webUrl(), ProjectsTable.class);
+        ProjectsTable projectsTable = open("", ProjectsTable.class);
         ProjectPage projectPage = projectsTable.navigateTo(PROJECT_NAME);
         projectPage.checkThatWidgetsDisplayed();
     }
@@ -33,7 +33,7 @@ public class ProjectTests extends TestBase {
     @WithLogin
     @Test
     void testcaseListDisplayedAfterNavigateBySidebar() {
-        ProjectsTable projectsTable = open(App.config.webUrl(), ProjectsTable.class);
+        ProjectsTable projectsTable = open("", ProjectsTable.class);
         ProjectPage projectPage = projectsTable.navigateTo(PROJECT_NAME);
         projectPage.getSidebar().navigateTo(MenuItem.TEST_CASES);
         TestCasesTable casesTable = new TestCasesTable();
