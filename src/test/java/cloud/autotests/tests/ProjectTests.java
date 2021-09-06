@@ -30,6 +30,6 @@ public class ProjectTests extends TestBase {
         ProjectPage projectPage = projectsTable.navigateTo(PROJECT_NAME);
         projectPage.getSidebar().navigateTo(MenuItem.TEST_CASES);
         TestCasesTable casesTable = new TestCasesTable();
-        casesTable.shouldHaveSize(12);
+        casesTable.shouldHaveSize(13);
     }
 }
