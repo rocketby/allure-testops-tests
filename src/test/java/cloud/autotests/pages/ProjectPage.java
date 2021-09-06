@@ -1,6 +1,7 @@
 package cloud.autotests.pages;
 
 import cloud.autotests.pages.components.Sidebar;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
@@ -8,6 +9,7 @@ import io.qameta.allure.Step;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$;
+import static io.qameta.allure.Allure.step;
 
 public class ProjectPage {
 
@@ -33,5 +35,11 @@ public class ProjectPage {
         launchesWidget.shouldBe(visible);
         automationTrendWidget.shouldBe(visible);
         muteTrendWidget.shouldBe(visible);
+    }
+
+    @Step("Delete project: Push 'delete' button and confirm a deletion")
+    public void deleteProject() {
+        $$("button.Button_style_danger").find(Condition.text("Delete project")).click();
+        $$("button.Button_style_danger").find(Condition.exactText("Delete")).click();
     }
 }
