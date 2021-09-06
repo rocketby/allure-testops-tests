@@ -1,5 +1,6 @@
 package cloud.autotests.helpers;
 
+import cloud.autotests.api.Authorization;
 import cloud.autotests.config.App;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -13,16 +14,7 @@ public class LoginExtension implements BeforeEachCallback {
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
         String authorizationResponse =
-                given()
-                        .filter(AllureRestAssuredFilter.withCustomTemplates())
-                        .formParam("grant_type", "apitoken")
-                        .formParam("scope", "openid")
-                        .formParam("token", App.config.userToken())
-                        .when()
-                        .post("/api/uaa/oauth/token")
-                        .then()
-                        .statusCode(200)
-                        .extract().response().asString();
+                new Authorization().getAuthorizationResponse().asString();
 
         open("/favicon.ico");
         localStorage().setItem("AS_AUTH_2", authorizationResponse);
