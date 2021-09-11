@@ -53,11 +53,12 @@ public class TestCasesTable {
         $(".LoadableTreeControlPanel > button").click();
     }
 
-    @Step("Delete test tases")
+    @Step("Delete test cases")
     public void deleteTestCases() {
         $(".tippy-content").$(byText("Delete")).click();
         $(".Modal__content").$(byText("Delete")).click();
     }
+
     public void navigateToTestByStatus(String statusName) {
         $$(".LoadableTree__view > li").findBy(text(statusName)).click();
     }

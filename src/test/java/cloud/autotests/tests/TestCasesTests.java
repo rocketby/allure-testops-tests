@@ -1,41 +1,48 @@
 package cloud.autotests.tests;
 
-import cloud.autotests.config.App;
+import cloud.autotests.api.Project;
 import cloud.autotests.data.MenuItem;
 import cloud.autotests.helpers.WithLogin;
-import cloud.autotests.pages.ProjectPage;
-import cloud.autotests.pages.ProjectsTable;
 import cloud.autotests.pages.TestCasesTable;
 import io.qameta.allure.Story;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import com.github.javafaker.Faker;
-import static com.codeborne.selenide.Selenide.open;
 
 @Story("Test cases tests")
 public class TestCasesTests extends TestBase {
-    Faker faker = new Faker();
-    private static final String PROJECT_NAME = "teacher qa_guru_diplom_project";
 
-    //generate random name of TC each time
-    private String testCaseName = "testCase_" + faker.number().randomNumber(10, false);
+    Faker faker = new Faker();
+    private String projectName = "testuser-testproject-toBeDeleted_" + faker.random().hex(6);
+    private String testCaseName = "testCase_" + faker.random().hex(6);
 
     @WithLogin
     @Test
     void shouldCreateTestCaseTest() {
-        TestCasesTable testCasesTable = new TestCasesTable();
-        ProjectsTable projectsTable = open(App.config.webUrl(), ProjectsTable.class);
-        ProjectPage projectPage = projectsTable.navigateTo(PROJECT_NAME);
+        //create project
+        Response createProjectResponse = new Project().createProject(projectName, true);
+        Integer projectId = createProjectResponse.path("id");
+        projectPage.openPage(projectId);
         projectPage.getSidebar().navigateTo(MenuItem.TEST_CASES);
 
+        //create test case in project
+        TestCasesTable testCasesTable = new TestCasesTable();
         testCasesTable.unlockTestCasesTree();
-
         int numberOfTestCases = testCasesTable.getNumberOfTestCases();
         testCasesTable.createNewTestCase(testCaseName);
+
+        //check, that test cases is created
         testCasesTable.shouldHaveSize(numberOfTestCases + 1);
         testCasesTable.checkTestCaseIsDisplayed(testCaseName);
 
+        //cleanup of test data - delete test case
         testCasesTable.chooseTestCase(testCaseName);
         testCasesTable.clickBulkActionsButton();
         testCasesTable.deleteTestCases();
+
+        //cleanup of test data - delete test project
+        projectPage.getSidebar().navigateTo(MenuItem.SETTINGS);
+        projectPage.deleteProject();
+
     }
 }
